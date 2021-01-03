@@ -1,17 +1,22 @@
 package com.aditya.quizapplication.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aditya.quizapplication.LoginActivity;
 import com.aditya.quizapplication.Models.ModelOptions;
 import com.aditya.quizapplication.R;
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -60,6 +65,22 @@ public class AdapterOptions extends RecyclerView.Adapter<AdapterOptions.MyHolder
                 title.setTextColor(Color.RED);
                 description.setTextColor(Color.RED);
             }
+            if (optionsList.get(position).getIcon().equals("logout")){
+                Glide.with(ctx).load(R.drawable.ic_baseline_exit_to_app_24).into(icon);
+            }
+            itemView.setOnClickListener(v -> {
+                switch (optionsList.get(position).getTitle()){
+                    case "LogOut":
+                        FirebaseAuth.getInstance().signOut();
+                        Intent home = new Intent(ctx, LoginActivity.class);
+                        home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        ctx.startActivity(home);
+                        break;
+                    default:
+                        Toast.makeText(ctx, "No Listener defined", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            });
         }
     }
 }

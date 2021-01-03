@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     ModelUser currentUserData;
     List<ModelOptions> optionsList;
+
+    public static String role="user";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         //do other code
         user = auth.getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference();
+        optionsList = new ArrayList<>();
 
         optionsRecycler= findViewById(R.id.optionsRecycler);
         welcomeUserText=findViewById(R.id.welcomeUserText);
@@ -66,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child("uid").exists()){
                     currentUserData = snapshot.getValue(ModelUser.class);
+                    if (currentUserData != null) {
+                        role = currentUserData.getRole();
+                    }
                     setView();
                 }else {
                     currentUserData = new ModelUser(user.getUid(),"","","");
@@ -86,14 +92,18 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void setView() {
+        optionsList.clear();
         welcomeUserText.setText("Welcome "+currentUserData.getName());
-        optionsList = new ArrayList<>();
+        switch (role){
+            case "admin":
+                optionsList.add(new ModelOptions("Manage Users","Manage the users","default","admin"));
+            case "creator":
+                optionsList.add(new ModelOptions("New Quiz","Create a new Quiz","default","creator"));
+                optionsList.add(new ModelOptions("Your Quiz","View Old Created Quiz","default","creator"));
+        }
         optionsList.add(new ModelOptions("Attempt Quiz","Attempt a new quiz","default","user"));
         optionsList.add(new ModelOptions("Previous Attempted Quiz","View Previous attempted quiz","default","user"));
-        optionsList.add(new ModelOptions("New Quiz","Create a new Quiz","default","creator"));
-        optionsList.add(new ModelOptions("Your Quiz","View Old Created Quiz","default","creator"));
-        optionsList.add(new ModelOptions("Manage Users","Manage the users","default","admin"));
-        optionsList.add(new ModelOptions("LogOut","Logout current user","default","user"));
+        optionsList.add(new ModelOptions("LogOut","Logout current user","logout","user"));
 
         optionsRecycler.setLayoutManager(new LinearLayoutManager(this));
         optionsRecycler.setAdapter(new AdapterOptions(this, optionsList));
