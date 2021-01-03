@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aditya.quizapplication.AttemptQuizActivity;
 import com.aditya.quizapplication.LoginActivity;
 import com.aditya.quizapplication.Models.ModelOptions;
+import com.aditya.quizapplication.NewQuizActivity;
 import com.aditya.quizapplication.R;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -68,6 +69,11 @@ public class AdapterOptions extends RecyclerView.Adapter<AdapterOptions.MyHolder
                         Intent quiz = new Intent(ctx, AttemptQuizActivity.class);
                         quiz.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         ctx.startActivity(quiz);
+                        break;
+                    case "New Quiz":
+                        Intent newQuiz = new Intent(ctx, NewQuizActivity.class);
+                        newQuiz.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        ctx.startActivity(newQuiz);
                         break;
                     default:
                         Toast.makeText(ctx, "No Listener defined", Toast.LENGTH_SHORT).show();
