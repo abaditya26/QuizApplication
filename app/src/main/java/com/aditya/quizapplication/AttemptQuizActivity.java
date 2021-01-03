@@ -3,11 +3,13 @@ package com.aditya.quizapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aditya.quizapplication.Models.ModelQuiz;
@@ -23,10 +25,13 @@ public class AttemptQuizActivity extends AppCompatActivity {
 
     LinearLayout searchQuizResult;
     EditText quizIdInput;
+    TextView quizDetailsId, quizDetailsName, quizDetailsOwner;
 
     FirebaseAuth auth;
     FirebaseUser user;
     DatabaseReference reference;
+    
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,14 @@ public class AttemptQuizActivity extends AppCompatActivity {
         searchQuizResult.setAlpha(0f);
 
         quizIdInput = findViewById(R.id.quizIdInput);
+        quizDetailsId = findViewById(R.id.quizDetailsId);
+        quizDetailsName = findViewById(R.id.quizDetailsName);
+        quizDetailsOwner = findViewById(R.id.quizDetailsOwner);
+        
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Fetching Data");
+        progressDialog.setMessage("Processing Request");
+        progressDialog.setCancelable(false);
 
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser()==null){
@@ -54,6 +67,7 @@ public class AttemptQuizActivity extends AppCompatActivity {
             quizIdInput.setError("Required");
             return;
         }
+        progressDialog.show();
         reference.child("Quiz").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -61,13 +75,17 @@ public class AttemptQuizActivity extends AppCompatActivity {
                     ModelQuiz quiz =snapshot1.getValue(ModelQuiz.class);
                     if (quiz.getId().equals(quizId)){
                         setData(quiz);
+                        progressDialog.cancel();
                         return;
                     }
                 }
+                Toast.makeText(AttemptQuizActivity.this, "No such quiz Found", Toast.LENGTH_SHORT).show();
+                progressDialog.cancel();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                progressDialog.cancel();
                 Toast.makeText(AttemptQuizActivity.this, "Error => "+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -75,6 +93,9 @@ public class AttemptQuizActivity extends AppCompatActivity {
     }
 
     private void setData(ModelQuiz quiz) {
-
+        quizDetailsId.setText(quiz.getId());
+        quizDetailsName.setText(quiz.getName());
+        quizDetailsOwner.setText(quiz.getOwner());
+        searchQuizResult.setAlpha(1f);
     }
 }
