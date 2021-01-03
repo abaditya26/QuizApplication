@@ -61,20 +61,9 @@ public class AdapterOptions extends RecyclerView.Adapter<AdapterOptions.MyHolder
         public void setData(List<ModelOptions> optionsList, int position) {
             title.setText(optionsList.get(position).getTitle());
             description.setText(optionsList.get(position).getDescription());
-            if (optionsList.get(position).getTitle().equals("LogOut")){
-                title.setTextColor(Color.RED);
-                description.setTextColor(Color.RED);
-            }
-            if (optionsList.get(position).getIcon().equals("logout")){
-                Glide.with(ctx).load(R.drawable.ic_baseline_exit_to_app_24).into(icon);
-            }
             itemView.setOnClickListener(v -> {
                 switch (optionsList.get(position).getTitle()){
                     case "LogOut":
-                        FirebaseAuth.getInstance().signOut();
-                        Intent home = new Intent(ctx, LoginActivity.class);
-                        home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                        ctx.startActivity(home);
                         break;
                     default:
                         Toast.makeText(ctx, "No Listener defined", Toast.LENGTH_SHORT).show();

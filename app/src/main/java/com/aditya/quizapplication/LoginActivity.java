@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void navigateRegister(View view) {
         startActivity(new Intent(this, RegisterUserActivity.class));
+        finish();
     }
 
     public void loginUser(View view) {
@@ -56,7 +57,10 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
                 progressDialog.cancel();
             }
-        }).addOnFailureListener(e -> Toast.makeText(LoginActivity.this, "Failed => "+e, Toast.LENGTH_SHORT).show());
+        }).addOnFailureListener(e -> {
+            Toast.makeText(LoginActivity.this, "Failed => " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            progressDialog.cancel();
+        });
     }
 
     private boolean validateInput(String email, String password) {
