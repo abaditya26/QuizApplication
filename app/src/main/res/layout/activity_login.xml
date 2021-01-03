@@ -64,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
+                android:onClick="loginUser"
                 android:text="Login" />
         </LinearLayout>
 
@@ -73,6 +74,7 @@
             android:layout_height="wrap_content"
             android:textColor="#3B931C"
             android:layout_margin="10dp"
+            android:onClick="navigateRegister"
             android:backgroundTint="@android:color/transparent"
             android:text="Don't have Account. Click here to register." />
     </LinearLayout>
