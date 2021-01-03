@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "605881950531",
+    "project_id": "quiz-application-bb0fa",
+    "storage_bucket": "quiz-application-bb0fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605881950531:android:97e07a687cc6eba0e1cff6",
+        "android_client_info": {
+          "package_name": "com.aditya.quizapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605881950531-roqr06krf6brin4oleff5g1a0v8lknto.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFRQvLubtxNirfCYJ3Y1uGYQFQReKz5tQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605881950531-roqr06krf6brin4oleff5g1a0v8lknto.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
