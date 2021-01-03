@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aditya.quizapplication.AttemptQuizActivity;
 import com.aditya.quizapplication.LoginActivity;
 import com.aditya.quizapplication.Models.ModelOptions;
 import com.aditya.quizapplication.R;
@@ -63,7 +64,10 @@ public class AdapterOptions extends RecyclerView.Adapter<AdapterOptions.MyHolder
             description.setText(optionsList.get(position).getDescription());
             itemView.setOnClickListener(v -> {
                 switch (optionsList.get(position).getTitle()){
-                    case "LogOut":
+                    case "Attempt Quiz":
+                        Intent quiz = new Intent(ctx, AttemptQuizActivity.class);
+                        quiz.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        ctx.startActivity(quiz);
                         break;
                     default:
                         Toast.makeText(ctx, "No Listener defined", Toast.LENGTH_SHORT).show();
