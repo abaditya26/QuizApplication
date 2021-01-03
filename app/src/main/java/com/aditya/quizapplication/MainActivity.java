@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -12,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
     FirebaseUser user;
+    TextView welcomeUserText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         }
         //do other code
         user = auth.getCurrentUser();
+        welcomeUserText=findViewById(R.id.welcomeUserText);
+
 
     }
 }

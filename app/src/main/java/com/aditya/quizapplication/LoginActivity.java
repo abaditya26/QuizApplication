@@ -1,5 +1,6 @@
 package com.aditya.quizapplication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText emailInput, passwordInput;
     FirebaseAuth auth;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,10 @@ public class LoginActivity extends AppCompatActivity {
         emailInput = findViewById(R.id.loginEmail);
         passwordInput = findViewById(R.id.loginPassword);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Logging IN");
+        progressDialog.setMessage("Processing Your Request");
+        progressDialog.setCancelable(false);
     }
 
     public void navigateRegister(View view) {
@@ -36,16 +42,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginUser(View view) {
+        progressDialog.show();
         String email, password;
         email = emailInput.getText().toString();
         password = passwordInput.getText().toString();
         if(!validateInput(email, password)){
+            progressDialog.cancel();
             return;
         }
         auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
                 finish();
+                progressDialog.cancel();
             }
         }).addOnFailureListener(e -> Toast.makeText(LoginActivity.this, "Failed => "+e, Toast.LENGTH_SHORT).show());
     }
