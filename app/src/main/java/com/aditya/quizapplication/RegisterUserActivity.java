@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.aditya.quizapplication.Models.ModelUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -17,6 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
 
 public class RegisterUserActivity extends AppCompatActivity {
 
@@ -58,12 +61,17 @@ public class RegisterUserActivity extends AppCompatActivity {
         if(!validateData(name, email, phone, password, passwordConfirm)){
             return;
         }
-        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    //do code to add in model and save it
-                }
+        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                //do code to add in model and save it
+                user = auth.getCurrentUser();
+                ModelUser userModel = new ModelUser(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid(),name, email, phone);
+                reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(userModel).addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                    }
+                }).addOnFailureListener(e -> Toast.makeText(RegisterUserActivity.this, "Error => "+e.getMessage(), Toast.LENGTH_SHORT).show());
             }
         }).addOnFailureListener(e -> Toast.makeText(RegisterUserActivity.this, "Error => "+e.getMessage(), Toast.LENGTH_SHORT).show());
     }
