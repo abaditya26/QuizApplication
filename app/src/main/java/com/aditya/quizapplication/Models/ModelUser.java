@@ -3,6 +3,9 @@ package com.aditya.quizapplication.Models;
 public class ModelUser {
     private String uid, name, email, phone, profileImage, role;
 
+    public ModelUser() {
+    }
+
     public ModelUser(String uid, String name, String email, String phone) {
         this.uid = uid;
         this.name = name;
