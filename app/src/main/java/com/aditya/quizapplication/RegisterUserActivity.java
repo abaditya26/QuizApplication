@@ -3,6 +3,7 @@ package com.aditya.quizapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     FirebaseUser user;
 
     EditText inputName, inputEmail, inputPhone, inputPassword, inputPasswordConfirm;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +50,16 @@ public class RegisterUserActivity extends AppCompatActivity {
         inputPassword = findViewById(R.id.registerPassword1);
         inputPasswordConfirm = findViewById(R.id.registerPassword2);
 
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Logging IN");
+        progressDialog.setMessage("Processing Your Request");
+        progressDialog.setCancelable(false);
+
     }
 
     public void registerUser(View view) {
+        progressDialog.show();
         String name, email, phone, password, passwordConfirm;
         name = inputName.getText().toString();
         email = inputEmail.getText().toString();
@@ -59,6 +68,7 @@ public class RegisterUserActivity extends AppCompatActivity {
         passwordConfirm = inputPasswordConfirm.getText().toString();
 
         if(!validateData(name, email, phone, password, passwordConfirm)){
+            progressDialog.cancel();
             return;
         }
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
@@ -70,10 +80,17 @@ public class RegisterUserActivity extends AppCompatActivity {
                     if (task1.isSuccessful()) {
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         finish();
+                        progressDialog.cancel();
                     }
-                }).addOnFailureListener(e -> Toast.makeText(RegisterUserActivity.this, "Error => "+e.getMessage(), Toast.LENGTH_SHORT).show());
+                }).addOnFailureListener(e -> {
+                    Toast.makeText(RegisterUserActivity.this, "Error => " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    progressDialog.cancel();
+                });
             }
-        }).addOnFailureListener(e -> Toast.makeText(RegisterUserActivity.this, "Error => "+e.getMessage(), Toast.LENGTH_SHORT).show());
+        }).addOnFailureListener(e -> {
+            Toast.makeText(RegisterUserActivity.this, "Error => " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            progressDialog.cancel();
+        });
     }
 
     private boolean validateData(String name, String email, String phone, String password, String passwordConfirm) {
