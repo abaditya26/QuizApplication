@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }else if(item.getItemId() == R.id.profileSettingsButton){
             //navigate to settings
+            startActivity(new Intent(this, EditProfileActivity.class));
         }else{
             Toast.makeText(this, "No listener defined", Toast.LENGTH_SHORT).show();
         }
