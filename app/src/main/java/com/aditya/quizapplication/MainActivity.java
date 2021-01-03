@@ -2,13 +2,18 @@ package com.aditya.quizapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aditya.quizapplication.Adapters.AdapterOptions;
+import com.aditya.quizapplication.Models.ModelOptions;
 import com.aditya.quizapplication.Models.ModelUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,6 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
@@ -25,8 +33,11 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference reference;
 
     TextView welcomeUserText;
+    RecyclerView optionsRecycler;
+
     ProgressDialog progressDialog;
     ModelUser currentUserData;
+    List<ModelOptions> optionsList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         user = auth.getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference();
 
+        optionsRecycler= findViewById(R.id.optionsRecycler);
         welcomeUserText=findViewById(R.id.welcomeUserText);
 
         progressDialog = new ProgressDialog(this);
@@ -55,12 +67,11 @@ public class MainActivity extends AppCompatActivity {
                 if (snapshot.child("uid").exists()){
                     currentUserData = snapshot.getValue(ModelUser.class);
                     setView();
-                    progressDialog.cancel();
                 }else {
                     currentUserData = new ModelUser(user.getUid(),"","","");
                     //TODO: navigate to edit profile
-                    progressDialog.cancel();
                 }
+                progressDialog.cancel();
             }
 
             @Override
@@ -73,7 +84,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private void setView() {
         welcomeUserText.setText("Welcome "+currentUserData.getName());
+        optionsList = new ArrayList<>();
+        optionsList.add(new ModelOptions("Attempt Quiz","Attempt a new quiz","default","user"));
+        optionsList.add(new ModelOptions("Previous Attempted Quiz","View Previous attempted quiz","default","user"));
+        optionsList.add(new ModelOptions("New Quiz","Create a new Quiz","default","creator"));
+        optionsList.add(new ModelOptions("Your Quiz","View Old Created Quiz","default","creator"));
+        optionsList.add(new ModelOptions("Manage Users","Manage the users","default","admin"));
+        optionsList.add(new ModelOptions("LogOut","Logout current user","default","user"));
+
+        optionsRecycler.setLayoutManager(new LinearLayoutManager(this));
+        optionsRecycler.setAdapter(new AdapterOptions(this, optionsList));
     }
 }
