@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void navigateRegister(View view) {
+        startActivity(new Intent(this, RegisterUserActivity.class));
     }
 
     public void loginUser(View view) {
