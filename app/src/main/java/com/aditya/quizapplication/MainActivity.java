@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     ModelUser currentUserData;
     List<ModelOptions> optionsList;
+
+    public static String userName = "";
 
     public static String role="user";
     @Override
@@ -83,10 +86,11 @@ public class MainActivity extends AppCompatActivity {
                     if (currentUserData != null) {
                         role = currentUserData.getRole();
                     }
+                    userName = currentUserData.getName();
                     setView();
                 }else {
                     currentUserData = new ModelUser(user.getUid(),"","","");
-                    //TODO: navigate to edit profile
+                    startActivity(new Intent(getApplicationContext(), EditProfileActivity.class));
                 }
                 progressDialog.cancel();
             }
