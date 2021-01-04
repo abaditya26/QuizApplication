@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.aditya.quizapplication.Adapters.AdapterQuestions;
@@ -31,6 +34,8 @@ public class OldQuestionsActivity extends AppCompatActivity {
 
     List<ModelQuestions> questions;
 
+    String quizId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +47,8 @@ public class OldQuestionsActivity extends AppCompatActivity {
         tool.setNavigationOnClickListener(v -> finish());
         tool.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
 
-        String quizId = getIntent().getStringExtra("quizId");
-        if (quizId.equals("")){
+        quizId = getIntent().getStringExtra("quizId");
+        if (quizId == null){
             Toast.makeText(this, "Error Generated", Toast.LENGTH_SHORT).show();
             finish();
             return;
@@ -74,5 +79,21 @@ public class OldQuestionsActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId()==R.id.addQuestionButton){
+            Intent intent = new Intent(this, AddNewQuestionActivity.class);
+            intent.putExtra("id",quizId);
+            startActivity(intent);
+        }
+        return true;
     }
 }

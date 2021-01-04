@@ -33,6 +33,8 @@ public class AttemptQuizActivity extends AppCompatActivity {
     
     ProgressDialog progressDialog;
 
+    String quizId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +64,7 @@ public class AttemptQuizActivity extends AppCompatActivity {
     }
 
     public void searchQuiz(View view) {
-        String quizId = quizIdInput.getText().toString();
+        quizId = quizIdInput.getText().toString();
         if (quizId.equals("")){
             quizIdInput.setError("Required");
             return;
@@ -97,5 +99,11 @@ public class AttemptQuizActivity extends AppCompatActivity {
         quizDetailsName.setText(quiz.getName());
         quizDetailsOwner.setText(quiz.getOwner());
         searchQuizResult.setAlpha(1f);
+    }
+
+    public void attemptQuiz(View view) {
+        Intent intent = new Intent(this, QuizActivity.class);
+        intent.putExtra("quizId",quizId);
+        startActivity(intent);
     }
 }

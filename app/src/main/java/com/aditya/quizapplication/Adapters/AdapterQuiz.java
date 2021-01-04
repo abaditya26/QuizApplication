@@ -57,7 +57,7 @@ public class AdapterQuiz extends RecyclerView.Adapter<AdapterQuiz.ViewHolder> {
             id.setText(quizList.get(position).getId());
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(ctx, OldQuestionsActivity.class);
-                intent.putExtra("quidId",quizList.get(position).getId());
+                intent.putExtra("quizId",quizList.get(position).getId());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 ctx.startActivity(intent);
             });
