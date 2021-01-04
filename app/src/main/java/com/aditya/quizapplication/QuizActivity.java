@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +12,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aditya.quizapplication.Models.ModelAttemptedQuiz;
 import com.aditya.quizapplication.Models.ModelQuestions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +33,7 @@ public class QuizActivity extends AppCompatActivity {
 
     List<ModelQuestions> questionsList;
     List<String> selected;
-    String quizId;
+    String quizId, quizName;
 
     FirebaseAuth auth;
     DatabaseReference reference;
@@ -50,12 +54,14 @@ public class QuizActivity extends AppCompatActivity {
         index = findViewById(R.id.questionIndicator);
 
         quizId = getIntent().getStringExtra("quizId");
+        quizName = getIntent().getStringExtra("quizName");
 
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser()==null){
             finish();
             return;
         }
+
         reference = FirebaseDatabase.getInstance().getReference();
         questionsList = new ArrayList<>();
         selected = new ArrayList<>();
@@ -127,10 +133,10 @@ public class QuizActivity extends AppCompatActivity {
         }
         selected.add(selectedText);
         if (position==questionsList.size()-1){
-            for (String sample : selected){
+            for (String sample : selected) {
                 System.out.println(sample);
             }
-            Toast.makeText(this, "All Questions Attempted", Toast.LENGTH_SHORT).show();
+            saveData();
             return;
         }
         setColorDefault();
@@ -139,5 +145,26 @@ public class QuizActivity extends AppCompatActivity {
         if (position==questionsList.size()-1){
             ((Button)findViewById(R.id.buttonNext)).setText("SUBMIT");
         }
+    }
+
+    private void saveData() {
+        int score = 0;
+        for (int i = 0; i<questionsList.size();i++){
+            if (questionsList.get(i).getAnswer().equals(selected.get(i))){
+                score++;
+            }
+        }
+        int finalScore = score;
+        reference.child("AttemptedQuiz").child(auth.getCurrentUser().getUid()).child(quizId)
+                .setValue(new ModelAttemptedQuiz(quizId,quizName,""+questionsList.size(),""+score,auth.getCurrentUser().getUid()))
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+//                        Intent scoreIntent = new Intent(this, ScoreActivity.class);
+//                        scoreIntent.putExtra("score", finalScore +"");
+//                        scoreIntent.putExtra("total",questionsList.size()+"");
+//                        startActivity(scoreIntent);
+                    }
+                });
     }
 }

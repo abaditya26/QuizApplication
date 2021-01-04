@@ -104,6 +104,7 @@ public class AttemptQuizActivity extends AppCompatActivity {
     public void attemptQuiz(View view) {
         Intent intent = new Intent(this, QuizActivity.class);
         intent.putExtra("quizId",quizId);
+        intent.putExtra("quizName",quizDetailsName.getText().toString());
         startActivity(intent);
     }
 }
