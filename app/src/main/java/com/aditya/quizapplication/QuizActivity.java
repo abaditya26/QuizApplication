@@ -161,8 +161,9 @@ public class QuizActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     Intent scoreIntent = new Intent(getApplicationContext(), ScoreActivity.class);
                     scoreIntent.putExtra("score", finalScore +"");
-                    scoreIntent.putExtra("total",questionsList.size()+"");
+                    scoreIntent.putExtra("totalQuestions",questionsList.size()+"");
                     startActivity(scoreIntent);
+                    finish();
                 });
     }
 }
