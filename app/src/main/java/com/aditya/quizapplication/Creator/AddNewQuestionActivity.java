@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class AddNewQuestionActivity extends AppCompatActivity {
 
     String quizId;
@@ -49,6 +51,12 @@ public class AddNewQuestionActivity extends AppCompatActivity {
             return;
         }
         reference = FirebaseDatabase.getInstance().getReference();
+
+        androidx.appcompat.widget.Toolbar tool = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar3);
+        setSupportActionBar(tool);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(true);
+        tool.setNavigationOnClickListener(v -> finish());
+        tool.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Fetching data");

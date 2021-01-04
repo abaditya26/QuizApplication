@@ -20,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class NewQuizActivity extends AppCompatActivity {
 
     EditText inputQuizId, inputQuizName;
@@ -43,6 +45,11 @@ public class NewQuizActivity extends AppCompatActivity {
         inputQuizId = findViewById(R.id.newQuizId);
         inputQuizName = findViewById(R.id.newQuizName);
 
+        androidx.appcompat.widget.Toolbar tool = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(tool);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(true);
+        tool.setNavigationOnClickListener(v -> finish());
+        tool.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Fetching Data");

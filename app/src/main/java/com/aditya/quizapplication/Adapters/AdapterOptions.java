@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aditya.quizapplication.AttemptQuizActivity;
+import com.aditya.quizapplication.Creator.CreatedQuizsActivity;
 import com.aditya.quizapplication.Models.ModelOptions;
 import com.aditya.quizapplication.Creator.NewQuizActivity;
 import com.aditya.quizapplication.R;
@@ -70,6 +71,11 @@ public class AdapterOptions extends RecyclerView.Adapter<AdapterOptions.MyHolder
                         Intent newQuiz = new Intent(ctx, NewQuizActivity.class);
                         newQuiz.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         ctx.startActivity(newQuiz);
+                        break;
+                    case "Your Quiz":
+                        Intent yourQuiz = new Intent(ctx, CreatedQuizsActivity.class);
+                        yourQuiz.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        ctx.startActivity(yourQuiz);
                         break;
                     default:
                         Toast.makeText(ctx, "No Listener defined", Toast.LENGTH_SHORT).show();

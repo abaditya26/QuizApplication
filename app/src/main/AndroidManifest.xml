@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuizApplication">
-        <activity android:name=".Creator.CreatedQuizsActivity"></activity>
+        <activity android:name=".Creator.OldQuestionsActivity"></activity>
+        <activity android:name=".Creator.CreatedQuizsActivity" />
         <activity android:name=".Creator.AddNewQuestionActivity" />
         <activity android:name=".Creator.NewQuizActivity" />
         <activity android:name=".AttemptQuizActivity" />
