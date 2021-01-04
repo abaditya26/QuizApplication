@@ -85,6 +85,7 @@ public class QuizActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private void setData(int position) {
         questionTextView.setText(questionsList.get(position).getQuestion());
         option1Button.setText(questionsList.get(position).getOption_1());
@@ -157,14 +158,11 @@ public class QuizActivity extends AppCompatActivity {
         int finalScore = score;
         reference.child("AttemptedQuiz").child(auth.getCurrentUser().getUid()).child(quizId)
                 .setValue(new ModelAttemptedQuiz(quizId,quizName,""+questionsList.size(),""+score,auth.getCurrentUser().getUid()))
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-//                        Intent scoreIntent = new Intent(this, ScoreActivity.class);
-//                        scoreIntent.putExtra("score", finalScore +"");
-//                        scoreIntent.putExtra("total",questionsList.size()+"");
-//                        startActivity(scoreIntent);
-                    }
+                .addOnCompleteListener(task -> {
+                    Intent scoreIntent = new Intent(getApplicationContext(), ScoreActivity.class);
+                    scoreIntent.putExtra("score", finalScore +"");
+                    scoreIntent.putExtra("total",questionsList.size()+"");
+                    startActivity(scoreIntent);
                 });
     }
 }
