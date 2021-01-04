@@ -1,6 +1,7 @@
 package com.aditya.quizapplication.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aditya.quizapplication.Creator.OldQuestionsActivity;
 import com.aditya.quizapplication.Models.ModelQuiz;
 import com.aditya.quizapplication.R;
 
@@ -42,7 +44,7 @@ public class AdapterQuiz extends RecyclerView.Adapter<AdapterQuiz.ViewHolder> {
         return quizList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView title, id;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -53,11 +55,11 @@ public class AdapterQuiz extends RecyclerView.Adapter<AdapterQuiz.ViewHolder> {
         public void setData(List<ModelQuiz> quizList, int position) {
             title.setText(quizList.get(position).getName());
             id.setText(quizList.get(position).getId());
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(ctx, OldQuestionsActivity.class);
+                intent.putExtra("quidId",quizList.get(position).getId());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                ctx.startActivity(intent);
             });
         }
     }
