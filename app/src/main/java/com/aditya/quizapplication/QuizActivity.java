@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -45,6 +46,12 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
+        androidx.appcompat.widget.Toolbar tool = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar6);
+        setSupportActionBar(tool);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(true);
+        tool.setNavigationOnClickListener(v -> finish());
+        tool.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
 
         option1Button = findViewById(R.id.option1);
         option2Button = findViewById(R.id.option2);

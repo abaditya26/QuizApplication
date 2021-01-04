@@ -3,6 +3,9 @@ package com.aditya.quizapplication.Models;
 public class ModelAttemptedQuiz {
     private String quizId, quizName, totalQuestions, score, uid;
 
+    public ModelAttemptedQuiz() {
+    }
+
     public ModelAttemptedQuiz(String quizId, String quizName, String totalQuestions, String score, String uid) {
         this.quizId = quizId;
         this.quizName = quizName;

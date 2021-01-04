@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class AttemptQuizActivity extends AppCompatActivity {
 
     LinearLayout searchQuizResult;
@@ -39,6 +41,12 @@ public class AttemptQuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attempt_quiz);
+
+        androidx.appcompat.widget.Toolbar tool = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar9);
+        setSupportActionBar(tool);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(true);
+        tool.setNavigationOnClickListener(v -> finish());
+        tool.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
 
         searchQuizResult = findViewById(R.id.searchQuizResult);
         searchQuizResult.setAlpha(0f);

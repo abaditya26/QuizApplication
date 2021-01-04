@@ -15,6 +15,7 @@ import com.aditya.quizapplication.AttemptQuizActivity;
 import com.aditya.quizapplication.Creator.CreatedQuizsActivity;
 import com.aditya.quizapplication.Models.ModelOptions;
 import com.aditya.quizapplication.Creator.NewQuizActivity;
+import com.aditya.quizapplication.PreviousAttemptedQuizActivity;
 import com.aditya.quizapplication.R;
 
 import java.util.List;
@@ -76,6 +77,11 @@ public class AdapterOptions extends RecyclerView.Adapter<AdapterOptions.MyHolder
                         Intent yourQuiz = new Intent(ctx, CreatedQuizsActivity.class);
                         yourQuiz.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         ctx.startActivity(yourQuiz);
+                        break;
+                    case "Previous Attempted Quiz":
+                        Intent previousQuiz = new Intent(ctx, PreviousAttemptedQuizActivity.class);
+                        previousQuiz.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        ctx.startActivity(previousQuiz);
                         break;
                     default:
                         Toast.makeText(ctx, "No Listener defined", Toast.LENGTH_SHORT).show();
