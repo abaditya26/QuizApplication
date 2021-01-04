@@ -2,7 +2,6 @@ package com.aditya.quizapplication.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aditya.quizapplication.AttemptQuizActivity;
-import com.aditya.quizapplication.LoginActivity;
 import com.aditya.quizapplication.Models.ModelOptions;
-import com.aditya.quizapplication.NewQuizActivity;
+import com.aditya.quizapplication.Creator.NewQuizActivity;
 import com.aditya.quizapplication.R;
-import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 

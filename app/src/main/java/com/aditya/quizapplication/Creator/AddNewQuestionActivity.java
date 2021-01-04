@@ -1,4 +1,4 @@
-package com.aditya.quizapplication;
+package com.aditya.quizapplication.Creator;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,9 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.aditya.quizapplication.Models.ModelQuestions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
+import com.aditya.quizapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -109,7 +107,20 @@ public class AddNewQuestionActivity extends AppCompatActivity {
         ModelQuestions questionModel = new ModelQuestions(question,option1,option2,option3,option4,answer);
         reference.child("Quiz").child(quizId).child("Questions").child(questionCount+"").setValue(questionModel).addOnCompleteListener(task -> {
             Toast.makeText(AddNewQuestionActivity.this, "Question Added", Toast.LENGTH_SHORT).show();
+            resetInputs();
         }).addOnFailureListener(e -> Toast.makeText(AddNewQuestionActivity.this, "Error => "+e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
+    private void resetInputs() {
+        questionInput.setText("");
+        option1Input.setText("");
+        option2Input.setText("");
+        option3Input.setText("");
+        option4Input.setText("");
+        radioOption1.setSelected(false);
+        radioOption2.setSelected(false);
+        radioOption3.setSelected(false);
+        radioOption4.setSelected(false);
     }
 
     private boolean validateData(String question, String option1, String option2, String option3, String option4, int selectedId) {
@@ -143,8 +154,7 @@ public class AddNewQuestionActivity extends AppCompatActivity {
         return true;
     }
 
-
-    private class TextWatcherAdapter implements TextWatcher {
+    private static class TextWatcherAdapter implements TextWatcher {
         RadioButton radioOption;
         TextWatcherAdapter(RadioButton radioOption){
             this.radioOption=radioOption;
@@ -164,6 +174,5 @@ public class AddNewQuestionActivity extends AppCompatActivity {
 
         }
     }
-
 
 }
