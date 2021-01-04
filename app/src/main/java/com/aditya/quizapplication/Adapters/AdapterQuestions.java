@@ -4,6 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,11 +44,25 @@ public class AdapterQuestions extends RecyclerView.Adapter<AdapterQuestions.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView questionTextView, answerTextView;
+        Button editBtn;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            questionTextView = itemView.findViewById(R.id.questionTextView);
+            answerTextView  = itemView.findViewById(R.id.answerTextView);
+            editBtn = itemView.findViewById(R.id.btnEdit);
         }
 
         public void setData(List<ModelQuestions> questions, int position) {
+            questionTextView.setText(questions.get(position).getQuestion());
+            answerTextView.setText(questions.get(position).getAnswer());
+            editBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(ctx, "Edit Button CLicked", Toast.LENGTH_SHORT).show();
+                    //edit button code
+                }
+            });
         }
     }
 }
