@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -85,6 +86,10 @@ public class NewQuizActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
                         Toast.makeText(NewQuizActivity.this, "Quiz Added", Toast.LENGTH_SHORT).show();
+                        Intent addQuestion = new Intent(this, AddNewQuestionActivity.class);
+                        addQuestion.putExtra("id",quizId);
+                        startActivity(addQuestion);
+                        finish();
                     }
                     progressDialog.cancel();
                 })
