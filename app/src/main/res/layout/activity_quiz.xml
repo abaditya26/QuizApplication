@@ -68,6 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:onClick="selectOption1"
                     android:background="@drawable/option_button_background"
                     />
 
@@ -76,6 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:onClick="selectOption2"
                     android:backgroundTint="@android:color/transparent"
                     android:background="@drawable/option_button_background"/>
 
@@ -84,6 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:onClick="selectOption3"
                     android:backgroundTint="@android:color/transparent"
                     android:background="@drawable/option_button_background"/>
 
@@ -92,9 +95,34 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:onClick="selectOption4"
                     android:background="@drawable/option_button_background"
                     android:backgroundTint="#A952FF41"/>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <Button
+                        android:id="@+id/resetBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_margin="10dp"
+                        android:text="RESET" />
+
+                    <Button
+                        android:id="@+id/buttonNext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_margin="10dp"
+                        android:backgroundTint="#68AAA8"
+                        android:onClick="nextClicked"
+                        android:text="NEXT" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
